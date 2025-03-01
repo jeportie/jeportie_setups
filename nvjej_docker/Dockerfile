@@ -6,7 +6,7 @@
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/28 23:57:23 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/01 03:04:48 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/01 16:36:41 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ ENV LC_ALL=en_US.UTF-8
 # Set working directory to /root so the shell starts there
 WORKDIR /root
 
-# Install required packages for C/C++ development, Neovim, X11 support, and Python venv
+# Install required packages for development, Neovim, X11 support, and Python venv
 RUN apt-get update && apt-get install -y \
     zsh \
     git \
@@ -82,28 +82,22 @@ RUN /root/venv/bin/pip install norminette
 # Ensure the venv bin directory is in PATH
 ENV PATH="/root/venv/bin:${PATH}"
 
-# (Optional) If you want to keep any other lazy clones, do it here; but we no
-# longer need the lines that clone Avante/Neotest into ~/.local/share/nvim/lazy.
+# ------------------------------------------------------------------------------
+# Copy lazy.nvim plugin configuration for Avante into NVChad’s config.
+# ------------------------------------------------------------------------------
+RUN mkdir -p /root/.config/nvim/lua
+COPY lazy.lua /root/.config/nvim/lua/plugins/lazy.lua
+COPY options.lua /root/.config/nvim/lua/options.lua
 
-# Make sure the custom plugin directory exists
-RUN mkdir -p /root/.config/nvim/lua/custom/plugins
-
-# Copy our custom plugin config files into place
-COPY avante.lua /root/.config/nvim/lua/custom/plugins/avante.lua
-COPY neotest.lua /root/.config/nvim/lua/custom/plugins/neotest.lua
-
-# (Optional) Copy custom configuration files if you have them
+# (Optional) Copy any other configuration files if needed:
 COPY nvjej.zshrc /root/.zshrc
 COPY custom_agnoster.zsh-theme /root/.oh-my-zsh/themes/agnoster.zsh-theme
-
-# Copy the NVChad installation helper script and the container entrypoint script
 COPY install_nvchad.sh /usr/local/bin/install_nvchad.sh
 RUN chmod +x /usr/local/bin/install_nvchad.sh
-
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Optionally run a headless sync now, so the plugins are already installed
+# Trigger lazy.nvim to sync plugins in headless mode
 RUN nvim --headless +"Lazy! sync" +qa
 
 # Set the entrypoint to launch our customized shell
