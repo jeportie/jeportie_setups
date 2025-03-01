@@ -4,3 +4,11 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+START_TEST	check_testunit_template.c	/^START_TEST(name_of_the_test_function)$/;"	f
+config 	nvjej_docker/avante.lua	/^    config = function()$/;"	f
+gcl	check_testunit_template.c	/^static t_gc *gcl;$/;"	v	file:
+main	check_testunit_template.c	/^int main(void)$/;"	f
+name_suite	check_testunit_template.c	/^Suite *name_suite(void)$/;"	f
+nvjej	nvjej_docker/install_alias.sh	/^nvjej() {$/;"	f
+setup	check_testunit_template.c	/^void setup(void)$/;"	f
+teardown	check_testunit_template.c	/^void teardown(void)$/;"	f
