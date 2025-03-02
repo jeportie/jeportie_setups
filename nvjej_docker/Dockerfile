@@ -6,7 +6,7 @@
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/28 23:57:23 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/01 16:36:41 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/02 13:34:37 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ WORKDIR /root
 RUN apt-get update && apt-get install -y \
     zsh \
     git \
+    tree \
     ripgrep \
     build-essential \
     make \
@@ -75,26 +76,33 @@ RUN git clone https://github.com/42Paris/minilibx-linux.git /opt/minilibx && \
 # Create a Python virtual environment and install pip, setuptools, and pynvim
 RUN python3 -m venv /root/venv && \
     /root/venv/bin/pip install --upgrade pip setuptools pynvim
+ENV VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # Install Norminette (42 school checker) using pip in the venv
 RUN /root/venv/bin/pip install norminette
 
 # Ensure the venv bin directory is in PATH
 ENV PATH="/root/venv/bin:${PATH}"
+# Configure Git to trust all directories
+RUN git config --global --add safe.directory "*"
+RUN git config --global user.email "jeportie@student.42.fr"
+RUN git config --global user.name "jeportie"
+
 
 # ------------------------------------------------------------------------------
 # Copy lazy.nvim plugin configuration for Avante into NVChad’s config.
 # ------------------------------------------------------------------------------
 RUN mkdir -p /root/.config/nvim/lua
-COPY lazy.lua /root/.config/nvim/lua/plugins/lazy.lua
-COPY options.lua /root/.config/nvim/lua/options.lua
+COPY lua/lazy.lua /root/.config/nvim/lua/plugins/lazy.lua
+COPY lua/options.lua /root/.config/nvim/lua/options.lua
 
 # (Optional) Copy any other configuration files if needed:
-COPY nvjej.zshrc /root/.zshrc
-COPY custom_agnoster.zsh-theme /root/.oh-my-zsh/themes/agnoster.zsh-theme
-COPY install_nvchad.sh /usr/local/bin/install_nvchad.sh
+COPY config/nvjej.zshrc /root/.zshrc
+COPY custom/custom_agnoster.zsh-theme /root/.oh-my-zsh/themes/agnoster.zsh-theme
+COPY script/install_nvchad.sh /usr/local/bin/install_nvchad.sh
+COPY lua/toggleterm_venv.lua /root/.config/nvim/lua/custom/toggleterm_venv.lua
 RUN chmod +x /usr/local/bin/install_nvchad.sh
-COPY entrypoint.sh /entrypoint.sh
+COPY script/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Trigger lazy.nvim to sync plugins in headless mode

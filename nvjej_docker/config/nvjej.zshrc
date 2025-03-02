@@ -42,3 +42,16 @@ pause() {
     git add . && git commit -m "$COMMIT" && git push && git status
 }
 
+sepcat() {
+  # If no arguments, use the default glob pattern
+  if [ "$#" -eq 0 ]; then
+    set -- */*
+  fi
+
+  for file in "$@"; do
+    if [ -f "$file" ]; then
+      echo "===== $file ====="
+      cat "$file"
+    fi
+  done
+}

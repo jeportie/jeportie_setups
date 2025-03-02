@@ -23,10 +23,33 @@ nvjej() {
 }
 '
 
+alias_definition2='
+sepcat() {
+  # If no arguments, use the default glob pattern
+  if [ "$#" -eq 0 ]; then
+    set -- */*
+  fi
+
+  for file in "$@"; do
+    if [ -f "$file" ]; then
+      echo "===== $file ====="
+      cat "$file"
+    fi
+  done
+}
+'
+
 # Append the alias definition to ~/.zshrc if it doesn't already exist.
 if ! grep -Fq "nvjej() {" ~/.zshrc; then
     echo "$alias_definition" >> ~/.zshrc
     echo "Alias 'nvjej' added to ~/.zshrc. Please run 'source ~/.zshrc' or restart your terminal."
 else
     echo "Alias 'nvjej' already exists in ~/.zshrc."
+fi
+# Append the alias definition2 to ~/.zshrc if it doesn't already exist.
+if ! grep -Fq "sepcat() {" ~/.zshrc; then
+    echo "$alias_definition2" >> ~/.zshrc
+    echo "Alias 'sepcat' added to ~/.zshrc. Please run 'source ~/.zshrc' or restart your terminal."
+else
+    echo "Alias 'sepccat' already exists in ~/.zshrc."
 fi

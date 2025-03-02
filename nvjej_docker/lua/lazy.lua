@@ -82,5 +82,18 @@ return {
       "nvim-treesitter/nvim-treesitter"
     },
   },
+  {
+	"42Paris/42header",
+	keys = {
+	  { "<F1>", "<cmd>Stdheader<CR>", desc = "Insert 42 Header" },
+	},
+	config = function()
+	  -- Optionally, set your user variables here if you haven't set them elsewhere.
+	  vim.cmd([[
+	    let g:user42 = 'jeportie'
+	    let g:mail42 = 'jeportie@student.42.fr'
+	  ]])
+	end,
+  },
 }
 
