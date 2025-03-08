@@ -4,12 +4,8 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-M.apply_config	nvjej_docker/lua/dynamic_style.lua	/^function M.apply_config(config)$/;"	f
-M.manual_override	nvjej_docker/lua/dynamic_style.lua	/^function M.manual_override(callback)$/;"	f
-M.open_ui	nvjej_docker/lua/dynamic_style.lua	/^function M.open_ui()$/;"	f
 START_TEST	check_testunit_template.c	/^START_TEST(name_of_the_test_function)$/;"	f
 _VenvToggle	nvjej_docker/lua/toggleterm_venv.lua	/^function _VenvToggle()$/;"	f
-ask_next	nvjej_docker/lua/dynamic_style.lua	/^  local function ask_next()$/;"	f
 callback 	nvjej_docker/lua/lazy.lua	/^        callback = function()$/;"	f
 config 	nvjej_docker/lua/lazy.lua	/^    config = function()$/;"	f
 config 	nvjej_docker/lua/lazy.lua	/^    config = function(_, opts)$/;"	f
@@ -20,5 +16,3 @@ nvjej	nvjej_docker/script/install_alias.sh	/^nvjej() {$/;"	f
 sepcat	nvjej_docker/script/install_alias.sh	/^sepcat() {$/;"	f
 setup	check_testunit_template.c	/^void setup(void)$/;"	f
 teardown	check_testunit_template.c	/^void teardown(void)$/;"	f
-vim.ui.input({ prompt 	nvjej_docker/lua/dynamic_style.lua	/^    vim.ui.input({ prompt = "Enter value for " .. key .. " (or leave blank to skip): " }, function(input)$/;"	f
-vim.ui.select(choices, { prompt 	nvjej_docker/lua/dynamic_style.lua	/^  vim.ui.select(choices, { prompt = "Choose Stylua configuration:" }, function(choice)$/;"	f

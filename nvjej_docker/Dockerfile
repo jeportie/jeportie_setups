@@ -6,7 +6,7 @@
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/28 23:57:23 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/08 01:25:13 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/08 16:46:38 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,9 +94,7 @@ RUN git config --global user.name "jeportie"
 # ------------------------------------------------------------------------------
 RUN mkdir -p /root/.config/nvim/lua
 COPY lua/lazy.lua /root/.config/nvim/lua/plugins/lazy.lua
-COPY lua/toggleterm_venv.lua /root/.config/nvim/lua/custom/toggleterm_venv.lua
-COPY lua/chadrc.lua /root/.config/nvim/lua/chadrc.lua
-COPY lua/dynamic_style.lua /root/.config/nvim/lua/dynamic_style.lua
+COPY lua/options.lua /root/.config/nvim/lua/options.lua
 
 # (Optional) Copy any other configuration files if needed:
 COPY config/nvjej.zshrc /root/.zshrc
