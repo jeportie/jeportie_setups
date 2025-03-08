@@ -1,5 +1,41 @@
 return {
   {
+    "rmagatti/goto-preview",
+    event = "BufEnter",
+    config = function()
+      require('goto-preview').setup {
+        width = 120,               -- Width of the floating window
+        height = 15,               -- Height of the floating window
+        border = {"↖", "─", "┐", "│", "┘", "─", "└", "│"},  -- Border characters
+        default_mappings = false,  -- We set our own mappings below
+        debug = false,             -- Debug information disabled
+        opacity = nil,             -- Opacity level (nil means disabled)
+        resizing_mappings = false, -- No arrow key resizing mappings
+        post_open_hook = nil,      -- Function to run after the window opens
+        post_close_hook = nil,     -- Function to run after the window closes
+        references = {             -- Configure the references UI with telescope
+          provider = "telescope",  
+          telescope = require("telescope.themes").get_dropdown({ hide_preview = false })
+        },
+        focus_on_open = true,      -- Focus the floating window on open
+        dismiss_on_move = false,   -- Do not dismiss when moving the cursor
+        force_close = true,        -- Force close the floating window on command
+        bufhidden = "wipe",        -- Buffer option for the floating window
+        stack_floating_preview_windows = true, -- Allow stacking floating windows
+        same_file_float_preview = true,          -- Open a new floating window for a reference in the same file
+        preview_window_title = { enable = true, position = "left" }, -- Show filename in preview window title
+        zindex = 1,                -- Z-index for window stacking
+      }
+      local opts = { noremap = true, silent = true }
+      vim.api.nvim_set_keymap("n", "<leader>pd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opts)
+      vim.api.nvim_set_keymap("n", "<leader>pt", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
+      vim.api.nvim_set_keymap("n", "<leader>pi", "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", opts)
+      vim.api.nvim_set_keymap("n", "<leader>pD", "<cmd>lua require('goto-preview').goto_preview_declaration()<CR>", opts)
+      vim.api.nvim_set_keymap("n", "<leader>pr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", opts)
+      vim.api.nvim_set_keymap("n", "<leader>pc", "<cmd>lua require('goto-preview').close_all_win()<CR>", opts)
+    end,
+  },
+  {
     "yetone/avante.nvim",
     event = "VeryLazy",
     lazy = false,
