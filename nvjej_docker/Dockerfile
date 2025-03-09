@@ -6,7 +6,7 @@
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/28 23:57:23 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/08 16:46:38 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/09 02:41:43 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     make \
     valgrind \
-    exuberant-ctags \
     check \
     tig \
     lldb \
@@ -44,13 +43,18 @@ RUN apt-get update && apt-get install -y \
     libbsd-dev \
     libx11-dev \
     wget \
+    npm \
     curl \
+    unzip \
+    tar \
+    7zip \
     x11-apps \
     xclip \
     python3-venv \
     python3-pip \
  && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y universal-ctags
 # Install the latest stable Neovim by downloading its tarball and copying files to /usr/local
 RUN wget https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.tar.gz && \
     tar -xzf nvim-linux-x86_64.tar.gz && \
@@ -88,13 +92,16 @@ RUN git config --global --add safe.directory "*"
 RUN git config --global user.email "jeportie@student.42.fr"
 RUN git config --global user.name "jeportie"
 
+ENV PATH="/root/.local/share/nvim/mason/bin:${PATH}"
 
-# ------------------------------------------------------------------------------
-# Copy lazy.nvim plugin configuration for Avante into NVChad’s config.
-# ------------------------------------------------------------------------------
 RUN mkdir -p /root/.config/nvim/lua
 COPY lua/lazy.lua /root/.config/nvim/lua/plugins/lazy.lua
 COPY lua/options.lua /root/.config/nvim/lua/options.lua
+COPY lua/lspconfig.lua /root/.config/nvim/lua/configs/lspconfig.lua
+COPY lua/chadrc.lua /root/.config/nvim/lua/chadrc.lua
+COPY lua/mappings.lua /root/.config/nvim/lua/mappings.lua
+COPY lua/lsp_servers.lua /root/.config/nvim/lua/custom/lsp_servers.lua
+COPY lua/mason_install.lua /root/.config/nvim/lua/custom/mason_install.lua
 
 # (Optional) Copy any other configuration files if needed:
 COPY config/nvjej.zshrc /root/.zshrc
