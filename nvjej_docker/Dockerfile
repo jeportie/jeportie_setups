@@ -6,7 +6,7 @@
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/28 23:57:23 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/09 02:41:43 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/09 15:07:48 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,12 +49,19 @@ RUN apt-get update && apt-get install -y \
     tar \
     7zip \
     x11-apps \
+    bear \
     xclip \
     python3-venv \
     python3-pip \
+    universal-ctags \
+    exuberant-ctags \
  && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y universal-ctags
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get update && \
+    apt-get install -y nodejs
+
+RUN ctags -R ~/  
 # Install the latest stable Neovim by downloading its tarball and copying files to /usr/local
 RUN wget https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.tar.gz && \
     tar -xzf nvim-linux-x86_64.tar.gz && \
