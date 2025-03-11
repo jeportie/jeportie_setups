@@ -59,6 +59,7 @@ RUN apt-get update && apt-get install -y \
  && rm -rf /var/lib/apt/lists/*
 
 RUN ctags -R ~/  
+RUN npm i @vscode/codicons
 # Install the latest stable Neovim by downloading its tarball and copying files to /usr/local
 RUN wget https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.tar.gz && \
     tar -xzf nvim-linux-x86_64.tar.gz && \

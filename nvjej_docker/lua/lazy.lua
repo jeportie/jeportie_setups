@@ -216,4 +216,67 @@ return {
       "nvim-tree/nvim-web-devicons",     -- optional
     },
   },
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    config = function()
+      require("dapui").setup()
+    end,
+  },
+  {
+    "aznhe21/actions-preview.nvim",
+    config = function()
+      require("actions-preview").setup {
+        diff = {
+          ctxlen = 3,
+          algorithm = "patience",
+          ignore_whitespace = true,
+        },
+        highlight_command = {
+          -- external highlight commands can be added here if desired
+        },
+        backend = { "telescope", "minipick", "snacks", "nui" },
+        telescope = vim.tbl_extend("force",
+          require("telescope.themes").get_dropdown({ winblend = 10 }),
+          {
+            make_value = nil,
+            make_make_display = nil,
+          }
+        ),
+        nui = {
+          dir = "col",
+          keymap = nil,
+          layout = {
+            position = "50%",
+            size = {
+              width = "60%",
+              height = "90%",
+            },
+            min_width = 40,
+            min_height = 10,
+            relative = "editor",
+          },
+          preview = {
+            size = "60%",
+            border = {
+              style = "rounded",
+              padding = { 0, 1 },
+            },
+          },
+          select = {
+            size = "40%",
+            border = {
+              style = "rounded",
+              padding = { 0, 1 },
+            },
+          },
+        },
+        snacks = {
+          layout = { preset = "default" },
+        },
+      }
+      -- Bind F5 to show the action preview window in normal and visual modes
+      vim.keymap.set({ "n", "v" }, "<F5>", require("actions-preview").code_actions)
+    end,
+  },
 }
