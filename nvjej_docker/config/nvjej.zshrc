@@ -1,11 +1,16 @@
 export DEFAULT_USER="nvjej"
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="agnoster"
 
-HISTFILE=/dev/null
 ZSH_COMPDUMP=/tmp/zcompdump
 
 plugins=(
@@ -32,6 +37,16 @@ alias venv="source /root/venv/bin/activate"
 
 alias vi="vim"
 alias vim="nvim -c 'Mason'"
+
+vim() {
+    if [ -z "$MASON_LOADED" ]; then
+        export MASON_LOADED=1
+        nvim -c 'Mason' "$@"
+    else
+        nvim "$@"
+    fi
+}
+
 
 pause() {
     if [ -n "$1" ]; then

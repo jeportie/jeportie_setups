@@ -146,11 +146,11 @@ prompt_dir() {
 }
 
 # Virtualenv: current working virtualenv
-prompt_virtualenv() {
-  if [[ -n "$VIRTUAL_ENV" && -n "$VIRTUAL_ENV_DISABLE_PROMPT" ]]; then
-    prompt_segment blue black "(${VIRTUAL_ENV:t:gs/%/%%})"
-  fi
-}
+#prompt_virtualenv() {
+#  if [[ -n "$VIRTUAL_ENV" && -n "$VIRTUAL_ENV_DISABLE_PROMPT" ]]; then
+#    prompt_segment blue black "(${VIRTUAL_ENV:t:gs/%/%%})"
+#  fi
+#}
 
 # Status:
 # - was there an error
@@ -183,7 +183,7 @@ prompt_aws() {
 build_prompt() {
   RETVAL=$?
   prompt_status
-  prompt_virtualenv
+# prompt_virtualenv
   prompt_aws
   prompt_context
   prompt_dir

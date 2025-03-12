@@ -6,7 +6,7 @@
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/12 14:23:55 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/12 14:27:04 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/12 15:44:11 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,6 @@ apt-get update && apt-get install -y \
     libreadline-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# Set Zsh as default shell and initialize history
-chsh -s /usr/bin/zsh
-touch ~/.zsh_history
-
 # Debugging Tools
 apt-get update && apt-get install -y \
     valgrind \
@@ -54,6 +50,11 @@ apt-get update && apt-get install -y \
     x11-apps \
     xclip && \
     rm -rf /var/lib/apt/lists/*
+
+# Minilibx Install
+git clone https://github.com/42Paris/minilibx-linux.git /opt/minilibx \
+	&& cd /opt/minilibx \
+	&& make
 
 # Python Environment
 apt-get update && apt-get install -y \

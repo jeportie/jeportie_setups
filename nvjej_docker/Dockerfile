@@ -6,39 +6,55 @@
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/12 12:58:41 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/12 15:35:41 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/12 15:59:37 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Base System Configuration
+# Base System Configuration ************************************************** #
 FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Locale Configuration
+# Locale Configuration ******************************************************* #
 RUN apt-get update && apt-get install -y locales locales-all && \
     locale-gen en_US.UTF-8 && update-locale LANG=en_US.UTF-8 && \
     rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
-
 WORKDIR /root
 
-# Copy and execute installation script
+# Copy and execute installation script *************************************** #
 COPY script/install.dockerfile /tmp/install.dockerfile
 RUN chmod +x /tmp/install.dockerfile
 RUN bash /tmp/install.dockerfile && rm /tmp/install.dockerfile
 
-# Install & config docker shell UI
+# Create a Python virtual environment and install : 
+# pip, setuptools, pynvim and norminette ************************************* #
+RUN python3 -m venv /root/venv && \
+    /root/venv/bin/pip install --upgrade pip setuptools pynvim
+ENV VIRTUAL_ENV_DISABLE_PROMPT=1
+ENV PATH="/root/venv/bin:${PATH}"
+RUN /root/venv/bin/pip install norminette
+
+# Install & config docker shell UI ******************************************* #
 RUN sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" "" --unattended && \
     sed -i 's/ZSH_THEME=".*"/ZSH_THEME="agnoster"/' ~/.zshrc
 RUN chsh -s $(which zsh)
+RUN touch ~/.zsh_history && chmod 600 ~/.zsh_history
 RUN npm i @vscode/codicons
 COPY custom/custom_agnoster.zsh-theme /root/.oh-my-zsh/themes/agnoster.zsh-theme
 COPY config/nvjej.zshrc /root/.zshrc
 
-# Set the entrypoint to launch our customized shell
+# Set the entrypoint to launch the customized shell ************************** #
 COPY script/entrypoint.sh /sh/entrypoint.sh
 RUN chmod +x /sh/entrypoint.sh
 ENTRYPOINT ["/sh/entrypoint.sh"]
 RUN git config --global user.email "jeportie@student.42.fr"
 RUN git config --global user.name "jeportie"
+
+# Install the latest stable Neovim + NVChad Base Disrto ********************** #
+RUN wget https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.tar.gz && \
+    tar -xzf nvim-linux-x86_64.tar.gz && \
+    cp -r nvim-linux-x86_64/* /usr/local/ && \
+    rm -rf nvim-linux-x86_64.tar.gz nvim-linux-x86_64
+RUN git clone https://github.com/NvChad/starter ~/.config/nvim && \
+    rm -rf ~/.config/nvim/.git
