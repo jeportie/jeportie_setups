@@ -11,12 +11,15 @@ nvjej() {
             -v ~/.ssh:/root/.ssh:ro \
             -v "$1":/root/projects/"$folder_name" \
             -v /tmp/.X11-unix:/tmp/.X11-unix \
+			-v ~/.zsh_history:/root/.zsh_history \
             -e DISPLAY=$DISPLAY \
+			-w "/root/projects/$folder_name" \
             jeportie/nvjej:latest
     else
         docker run -it \
             -v ~/.ssh:/root/.ssh:ro \
             -v /tmp/.X11-unix:/tmp/.X11-unix \
+			-v ~/.zsh_history:/root/.zsh_history \
             -e DISPLAY=$DISPLAY \
             jeportie/nvjej:latest
     fi
