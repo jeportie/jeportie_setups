@@ -64,3 +64,4 @@ RUN nvim --headless +"Lazy! sync" +qa
 # Copy lua config files ****************************************************** #
 COPY lua/chadrc.lua /root/.config/nvim/lua/chadrc.lua
 COPY lua/options.lua /root/.config/nvim/lua/options.lua
+COPY lua/cmp.lua /root/.local/share/nvim/lazy/NvChad/lua/nvchad/configs/cmp.lua
