@@ -58,7 +58,7 @@ RUN wget https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x
     rm -rf nvim-linux-x86_64.tar.gz nvim-linux-x86_64
 RUN git clone https://github.com/NvChad/starter ~/.config/nvim && \
     rm -rf ~/.config/nvim/.git
-# Trigger lazy.nvim to sync plugins in headless mode
+
 RUN nvim --headless +"Lazy! sync" +qa
 
 # Copy lua config files ****************************************************** #
@@ -70,3 +70,7 @@ COPY lua/lsp_servers.lua /root/.config/nvim/lua/custom/lsp_servers.lua
 COPY lua/mason_install.lua /root/.config/nvim/lua/custom/mason_install.lua
 COPY lua/lazy.lua /root/.config/nvim/lua/plugins/lazy.lua
 # COPY lua/mappings.lua /root/.config/nvim/lua/mappings.lua
+
+
+# Trigger lazy.nvim to sync plugins in headless mode ************************* #
+RUN nvim --headless +"Lazy! sync" +qa
