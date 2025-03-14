@@ -65,3 +65,8 @@ RUN nvim --headless +"Lazy! sync" +qa
 COPY lua/chadrc.lua /root/.config/nvim/lua/chadrc.lua
 COPY lua/options.lua /root/.config/nvim/lua/options.lua
 COPY lua/cmp.lua /root/.local/share/nvim/lazy/NvChad/lua/nvchad/configs/cmp.lua
+COPY lua/lspconfig.lua /root/.config/nvim/lua/configs/lspconfig.lua
+COPY lua/lsp_servers.lua /root/.config/nvim/lua/custom/lsp_servers.lua
+COPY lua/mason_install.lua /root/.config/nvim/lua/custom/mason_install.lua
+COPY lua/lazy.lua /root/.config/nvim/lua/plugins/lazy.lua
+# COPY lua/mappings.lua /root/.config/nvim/lua/mappings.lua

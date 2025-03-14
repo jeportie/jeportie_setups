@@ -5,6 +5,7 @@ local lspconfig = require "lspconfig"
 local lsp_servers = require("custom.lsp_servers")
 local nvlsp = require "nvchad.configs.lspconfig"
 
+-- lsps with default config
 for _, lsp in ipairs(lsp_servers) do
   lspconfig[lsp].setup {
     on_attach = nvlsp.on_attach,
