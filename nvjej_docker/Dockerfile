@@ -60,3 +60,7 @@ RUN git clone https://github.com/NvChad/starter ~/.config/nvim && \
     rm -rf ~/.config/nvim/.git
 # Trigger lazy.nvim to sync plugins in headless mode
 RUN nvim --headless +"Lazy! sync" +qa
+
+# Copy lua config files ****************************************************** #
+COPY lua/chadrc.lua /root/.config/nvim/lua/chadrc.lua
+COPY lua/options.lua /root/.config/nvim/lua/options.lua
