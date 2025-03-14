@@ -24,6 +24,7 @@ apt-get update && apt-get install -y \
     ripgrep \
     curl \
     wget \
+	expect \
     unzip \
     tar \
     p7zip-full && \
