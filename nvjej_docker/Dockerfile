@@ -6,7 +6,7 @@
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/12 12:58:41 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/12 15:59:37 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/14 10:38:10 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,3 +58,5 @@ RUN wget https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x
     rm -rf nvim-linux-x86_64.tar.gz nvim-linux-x86_64
 RUN git clone https://github.com/NvChad/starter ~/.config/nvim && \
     rm -rf ~/.config/nvim/.git
+# Trigger lazy.nvim to sync plugins in headless mode
+RUN nvim --headless +"Lazy! sync" +qa

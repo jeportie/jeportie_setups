@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Dockerfile                                         :+:      :+:    :+:    #
+#    old_dockerfile                                     :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/28 23:57:23 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/09 21:46:35 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/14 10:38:27 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,3 @@ COPY lua/mason_install.lua /root/.config/nvim/lua/custom/mason_install.lua
 # (Optional) Copy any other configuration files if needed:
 COPY script/install_nvchad.sh /usr/local/bin/install_nvchad.sh
 RUN chmod +x /usr/local/bin/install_nvchad.sh
-
-# Trigger lazy.nvim to sync plugins in headless mode
-RUN nvim --headless +"Lazy! sync" +qa
-

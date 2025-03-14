@@ -36,7 +36,6 @@ source $ZSH/oh-my-zsh.sh
 alias venv="source /root/venv/bin/activate"
 
 alias vi="vim"
-alias vim="nvim -c 'Mason'"
 
 vim() {
     if [ -z "$MASON_LOADED" ]; then
