@@ -40,7 +40,7 @@ alias vi="vim"
 vim() {
     if [ -z "$MASON_LOADED" ]; then
         export MASON_LOADED=1
-        nvim -c 'Mason' "$@"
+        nvim -c 'MasonInstall clang-format' -c "TSInstall c cpp bash cmake make" "$@"
     else
         nvim "$@"
     fi
@@ -66,6 +66,22 @@ sepcat() {
     if [ -f "$file" ]; then
       echo "===== $file ====="
       cat "$file"
+    fi
+  done
+}
+
+cform() {
+  # Define the available styles.
+  local styles=("LLVM" "Google" "Chromium" "Mozilla" "WebKit" "Microsoft" "GNU")
+  
+  echo "Select a clang-format style:"
+  select style in "${styles[@]}"; do
+    if [[ -n $style ]]; then
+      ~/.local/share/nvim/mason/bin/clang-format --style "$style" --dump-config > .clang-format
+      echo ".clang-format file created with style $style"
+      break
+    else
+      echo "Invalid selection. Please try again."
     fi
   done
 }

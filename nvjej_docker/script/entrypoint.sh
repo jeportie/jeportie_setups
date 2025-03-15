@@ -8,5 +8,8 @@ if [ -n "$1" ]; then
     git config --global --add safe.directory "/root/projects/${folder_name}"
 fi
 
+# Disable dubious ownership check globally
+git config --global --add safe.directory "*"
+
 # Launch zsh
 exec zsh
