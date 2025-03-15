@@ -38,14 +38,15 @@ alias venv="source /root/venv/bin/activate"
 alias vi="vim"
 
 vim() {
-    if [ -z "$MASON_LOADED" ]; then
-        export MASON_LOADED=1
+    FLAG="/root/.cache/nvim/mason_installed.flag"
+    if [ ! -f "$FLAG" ]; then
         nvim -c 'MasonInstall clang-format codelldb' -c "TSInstall c cpp bash cmake make" "$@"
+        # Create the flag file so we don't run initialization again
+        touch "$FLAG"
     else
         nvim "$@"
     fi
 }
-
 
 pause() {
     if [ -n "$1" ]; then

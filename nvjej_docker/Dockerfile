@@ -6,7 +6,7 @@
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/12 12:58:41 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/14 10:38:10 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/15 22:56:28 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,3 +74,8 @@ COPY lua/mappings.lua /root/.local/share/nvim/lazy/NvChad/lua/nvchad/mappings.lu
 
 # Trigger lazy.nvim to sync plugins in headless mode ************************* #
 RUN nvim --headless +"Lazy! sync" +qa
+
+# COPY mounted volumes to default
+RUN cp -r /root/.cache /root/.default.cache
+RUN cp -r /root/.config /root/.default.config
+RUN cp -r /root/.local /root/.default.local

@@ -3,6 +3,13 @@
 
 alias_definition='
 nvjej() {
+    FLAG="$HOME/.cache/docker_nv_reset.flag"
+    if [ -f "$FLAG" ]; then
+        echo "Reset flag found. Removing persistent Neovim directories..."
+        sudo rm -rf ~/config ~/local ~/cache
+        rm -f "$FLAG"
+    fi
+
     xhost +local:docker
     if [ -n "$1" ]; then
         folder_name=$(basename "$1")
@@ -11,14 +18,22 @@ nvjej() {
             -v "$1":/root/projects/"$folder_name" \
             -v /tmp/.X11-unix:/tmp/.X11-unix \
             -v ~/.zsh_history:/root/.zsh_history \
+            -v ~/config/nvim:/root/.config/nvim \
+            -v ~/local/share/nvim:/root/.local/share/nvim \
+            -v ~/cache/nvim:/root/.cache/nvim \
+            -v ~/local/state/nvim:/root/.local/state/nvim \
             -e DISPLAY=$DISPLAY \
             -w "/root/projects/$folder_name" \
-            jeportie/nvjej:latest "$1"
+            jeportie/nvjej:latest
     else
         docker run -it \
             -v ~/.ssh:/root/.ssh:ro \
             -v /tmp/.X11-unix:/tmp/.X11-unix \
             -v ~/.zsh_history:/root/.zsh_history \
+            -v ~/config/nvim:/root/.config/nvim \
+            -v ~/local/share/nvim:/root/.local/share/nvim \
+            -v ~/cache/nvim:/root/.cache/nvim \
+            -v ~/local/state/nvim:/root/.local/state/nvim \
             -e DISPLAY=$DISPLAY \
             jeportie/nvjej:latest
     fi
