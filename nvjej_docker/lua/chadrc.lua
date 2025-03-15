@@ -7,6 +7,8 @@ M.base46 = {
 	theme = "gruvchad",
 }
 
+-- M.mappings = require("custom.mappings")
+
 M.nvdash = {
 	load_on_startup = true,
     header = {

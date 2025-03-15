@@ -40,7 +40,7 @@ alias vi="vim"
 vim() {
     if [ -z "$MASON_LOADED" ]; then
         export MASON_LOADED=1
-        nvim -c 'MasonInstall clang-format' -c "TSInstall c cpp bash cmake make" "$@"
+        nvim -c 'MasonInstall clang-format codelldb' -c "TSInstall c cpp bash cmake make" "$@"
     else
         nvim "$@"
     fi
