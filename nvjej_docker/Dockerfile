@@ -6,7 +6,7 @@
 #    By: jeportie <jeportie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/12 12:58:41 by jeportie          #+#    #+#              #
-#    Updated: 2025/03/15 22:56:28 by jeportie         ###   ########.fr        #
+#    Updated: 2025/03/16 14:26:57 by jeportie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,22 @@ RUN wget https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x
 RUN git clone https://github.com/NvChad/starter ~/.config/nvim && \
     rm -rf ~/.config/nvim/.git
 
+# Install Lua Interpreters *************************************************** #
+RUN apt-get update && apt-get install -y \
+    lua5.3 lua5.3-dev \
+    lua5.1 lua5.1-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+# LuaRocks and Lua Modules Installation ************************************** #
+RUN wget https://luarocks.org/releases/luarocks-3.11.1.tar.gz && \
+    tar zxpf luarocks-3.11.1.tar.gz && \
+    cd luarocks-3.11.1 && \
+    ./configure && make && make install && \
+    luarocks install luasocket && \
+    luarocks install busted && \
+    luarocks --lua-version=5.1 install vusted && \
+    cd .. && rm -rf luarocks-3.11.1 luarocks-3.11.1.tar.gz
+
 RUN nvim --headless +"Lazy! sync" +qa
 
 # Copy lua config files ****************************************************** #
@@ -79,3 +95,4 @@ RUN nvim --headless +"Lazy! sync" +qa
 RUN cp -r /root/.cache /root/.default.cache
 RUN cp -r /root/.config /root/.default.config
 RUN cp -r /root/.local /root/.default.local
+
