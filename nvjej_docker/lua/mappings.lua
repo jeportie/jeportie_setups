@@ -1,7 +1,7 @@
 local map = vim.keymap.set
 
 -- Set the CursorHold trigger time to 2000ms (2 seconds)
-vim.o.updatetime = 500
+vim.o.updatetime = 1500
 
 -- When the cursor is idle for 2 seconds, show the LSP info popup.
 vim.api.nvim_create_autocmd("CursorHold", {
@@ -10,6 +10,25 @@ vim.api.nvim_create_autocmd("CursorHold", {
     vim.lsp.buf.hover()
   end,
 })
+
+-- Automatically close any floating hover window when the cursor moves.
+vim.api.nvim_create_autocmd("CursorMoved", {
+  pattern = "*",
+  callback = function()
+    if vim.lsp and vim.lsp.util and vim.lsp.util.close_floating_preview then
+      vim.lsp.util.close_floating_preview()
+    end
+  end,
+})
+
+-- Map lspsaga Code Action
+map("n", "<leader>co", "<cmd>CompilerOpen<CR>", { desc = "toogle compiler menu"})
+
+-- Map lspsaga Code Action
+map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", { desc = "toogle code_action menu"})
+-- Map lspsaga Code Action
+map("n", "<leader>cd", "<cmd>Lspsaga diagnostic_jump_next<CR>", { desc = "toogle next diagnostic menu"})
+
 -- Remap ";" in normal mode to enter command mode
 map("n", ";", ":", { desc = "Enter command mode" })
 
